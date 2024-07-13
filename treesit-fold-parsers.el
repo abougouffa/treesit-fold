@@ -134,6 +134,11 @@
                  (t
                   (treesit-fold-range-c-like-comment node offset))))))))
 
+(defun treesit-fold-parsers-awk ()
+  "Rule set for Awk."
+  ;; TODO: Complete this function
+  (append (treesit-fold-parsers-c)))
+
 (defun treesit-fold-parsers-bash ()
   "Rule set for Bash."
   '((compound_statement . treesit-fold-range-seq)
@@ -258,6 +263,20 @@
     (comment
      . (lambda (node offset)
          (treesit-fold-range-line-comment node offset "#")))))
+
+(defun treesit-fold-parsers-gleam ()
+  "Rules set for Gleam."
+  '((function           . treesit-fold-range-gleam)
+    (type_definition    . treesit-fold-range-gleam)
+    (anonymous_function . treesit-fold-range-gleam)
+    (block              . treesit-fold-range-gleam)
+    (list               . treesit-fold-range-seq)
+    (module_comment
+     . (lambda (node offset)
+         (treesit-fold-range-line-comment node offset "////")))
+    (statement_comment
+     . (lambda (node offset)
+         (treesit-fold-range-line-comment node offset "///")))))
 
 (defun treesit-fold-parsers-glsl ()
   "Rule set for GLSL."
@@ -663,6 +682,11 @@
     (full_type_declaration       . treesit-fold-range-vhdl-type)
     (enumeration_type_definition . treesit-fold-range-seq)
     (comment                     . treesit-fold-range-lua-comment)))
+
+(defun treesit-fold-parsers-vimscript ()
+  "Rule set for Vimscript."
+  '((function_definition . treesit-fold-range-vimscript-function)
+    (if_statement        . (treesit-fold-range-seq 1 -4))))
 
 (defun treesit-fold-parsers-xml ()
   "Rule set for XML."
